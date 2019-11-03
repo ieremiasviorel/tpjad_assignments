@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+repositories { mavenCentral() }
+dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:+'
+    compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.28',
+            'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.28',
+            'org.apache.tomcat.embed:tomcat-embed-jasper:8.0.28',
+            'org.apache.tomcat:tomcat-jasper:8.0.28',
+            'org.apache.tomcat:tomcat-jasper-el:8.0.28',
+            'org.apache.tomcat:tomcat-jsp-api:8.0.28',
+            'org.eclipse.jetty:jetty-server:9.4.0.M0',
+            'org.eclipse.jetty:jetty-servlet:9.4.0.M0',
+            'org.eclipse.jetty:jetty-http:9.4.0.M0'
+}
+
+task buildWAR(type: War) {
+    group 'build'
+}
+
+task buildJarEmbJetty(type: Jar) {
+    group 'build'
+    baseName 'Assignment1EmbeddedJetty'
+    manifest { attributes 'Main-Class': 'com.tpjad.servlet.JettyServer' }
+    from sourceSets.main.output
+    outputs.upToDateWhen { false }
+}
+
+task buildJarEmbTomcat(type: Jar) {
+    group 'build'
+    baseName 'Assignment1EmbeddedTomcat'
+    manifest { attributes 'Main-Class': 'com.tpjad.servlet.TomcatServer' }
+    from sourceSets.main.output
+    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) })
+    outputs.upToDateWhen { false }
+
+}
