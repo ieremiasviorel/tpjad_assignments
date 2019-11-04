@@ -1,4 +1,4 @@
-package com.tpjad.servlet;
+package com.tpjad.servlet.assig;
 
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.core.StandardContext;
@@ -10,16 +10,20 @@ import java.io.File;
 
 public class TomcatServer {
     public static void main(String[] args) throws Exception {
+        String webappDirLocation = "src/main/webapp/";
+
         Tomcat server = new Tomcat();
         server.setPort(8080);
-        StandardContext rootCtx = (StandardContext) server.addWebapp("",
-                (new File(System.getProperty("java.io.tmpdir"))).getAbsolutePath());
+
+        StandardContext rootCtx = (StandardContext) server
+                .addWebapp("/", new File(webappDirLocation).getAbsolutePath());
         WebResourceRoot resources = new StandardRoot(rootCtx);
         resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes",
                 (new File(".")).getAbsolutePath(), "/"));
         rootCtx.setResources(resources);
-        server.start();
+
         System.out.println("Start server Tomcat embedded");
+        server.start();
         server.getServer().await();
     }
 }
