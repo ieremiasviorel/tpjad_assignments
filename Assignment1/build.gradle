@@ -6,39 +6,58 @@ plugins {
 repositories { mavenCentral() }
 
 dependencies {
-    compile 'javax.servlet:javax.servlet-api:+',
+    providedCompile 'javax.servlet:javax.servlet-api:+'
 
-            'org.apache.tomcat.embed:tomcat-embed-core:8.0.28',
+    compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.28',
             'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.28',
             'org.apache.tomcat.embed:tomcat-embed-jasper:8.0.28',
             'org.apache.tomcat:tomcat-jasper:8.0.28',
             'org.apache.tomcat:tomcat-jasper-el:8.0.28',
             'org.apache.tomcat:tomcat-jsp-api:8.0.28',
 
+            'jstl:jstl:1.2',
+
             'org.eclipse.jetty:jetty-server:9.4.0.M0',
             'org.eclipse.jetty:jetty-servlet:9.4.0.M0',
-            'org.eclipse.jetty:jetty-http:9.4.0.M0'
+            'org.eclipse.jetty:jetty-webapp:9.4.0.M0',
+            'org.eclipse.jetty:jetty-annotations:9.4.0.M0',
+            'org.eclipse.jetty:apache-jsp:9.4.0.M0'
 }
 
-task buildWAR(type: War) {
+sourceSets {
+    main {
+        resources {
+            srcDirs = [
+                    'src/main/webapp',
+                    'src/main/resources'
+            ]
+        }
+    }
+}
+
+task assigBuildWAR(type: War) {
     group 'build'
+    baseName 'Assig1WAR'
+    manifest { attributes 'Path': '/' }
     outputs.upToDateWhen { false }
 }
 
-task buildJarEmbJetty(type: Jar) {
+task assigBuildJarEmbJetty(type: Jar) {
     group 'build'
-    baseName 'Assignment1EmbeddedJetty'
+    baseName 'Assig1EmbJetty'
     manifest { attributes 'Main-Class': 'com.tpjad.servlet.assig.JettyServer' }
     from sourceSets.main.output
     from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) })
+    exclude "META-INF/*.SF", "META-INF/*.RSA", "about.html", "about_files/**", "readme.txt", "plugin.properties", "jetty-dir.css"
     outputs.upToDateWhen { false }
 }
 
-task buildJarEmbTomcat(type: Jar) {
+task assigBuildJarEmbTomcat(type: Jar) {
     group 'build'
-    baseName 'Assignment1EmbeddedTomcat'
+    baseName 'Assig1EmbTomcat'
     manifest { attributes 'Main-Class': 'com.tpjad.servlet.assig.TomcatServer' }
     from sourceSets.main.output
     from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) })
+    exclude "META-INF/*.SF", "META-INF/*.RSA", "about.html", "about_files/**", "readme.txt", "plugin.properties", "jetty-dir.css"
     outputs.upToDateWhen { false }
 }

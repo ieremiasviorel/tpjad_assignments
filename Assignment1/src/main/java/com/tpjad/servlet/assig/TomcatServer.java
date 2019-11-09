@@ -22,7 +22,6 @@ public class TomcatServer {
                 (new File(".")).getAbsolutePath(), "/"));
         rootCtx.setResources(resources);
 
-        System.out.println("Start server Tomcat embedded");
         server.start();
         server.getServer().await();
     }
