@@ -1,0 +1,17 @@
+plugins {
+    id "war"
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    providedCompile "javax.servlet:javax.servlet-api:+"
+}
+
+war {
+    baseName "Assig1WAR"
+}
+
+jar {
+    sourceSets.main.resources.srcDirs += ["src/main/webapp"]
+}

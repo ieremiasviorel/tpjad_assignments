@@ -1,63 +1,36 @@
-plugins {
-    id 'java'
-    id 'war'
+task assigBuildAll {
+    group "build"
+    dependsOn("assigBuildWAR", "assigBuildEmbTomcat", "assigBuildEmbJetty")
 }
 
-repositories { mavenCentral() }
+task assigBuildWAR(type: Copy) {
+    group "build"
+    dependsOn(":common:build")
 
-dependencies {
-    providedCompile 'javax.servlet:javax.servlet-api:+'
-
-    compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.28',
-            'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.28',
-            'org.apache.tomcat.embed:tomcat-embed-jasper:8.0.28',
-            'org.apache.tomcat:tomcat-jasper:8.0.28',
-            'org.apache.tomcat:tomcat-jasper-el:8.0.28',
-            'org.apache.tomcat:tomcat-jsp-api:8.0.28',
-
-            'jstl:jstl:1.2',
-
-            'org.eclipse.jetty:jetty-server:9.4.0.M0',
-            'org.eclipse.jetty:jetty-servlet:9.4.0.M0',
-            'org.eclipse.jetty:jetty-webapp:9.4.0.M0',
-            'org.eclipse.jetty:jetty-annotations:9.4.0.M0',
-            'org.eclipse.jetty:apache-jsp:9.4.0.M0'
+    from "${project(":common").buildDir}/libs"
+    include "*.war"
+    into "${project.buildDir}/libs"
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDirs = [
-                    'src/main/webapp',
-                    'src/main/resources'
-            ]
-        }
-    }
+task assigBuildEmbTomcat(type: Copy) {
+    group "build"
+    dependsOn(":tomcat:build")
+
+    from "${project(":tomcat").buildDir}/libs"
+    into "${project.buildDir}/libs"
 }
 
-task assigBuildWAR(type: War) {
-    group 'build'
-    baseName 'Assig1WAR'
-    manifest { attributes 'Path': '/' }
-    outputs.upToDateWhen { false }
+task assigBuildEmbJetty(type: Copy) {
+    group "build"
+    dependsOn(":jetty:build")
+
+    from "${project(":jetty").buildDir}/libs"
+    into "${project.buildDir}/libs"
 }
 
-task assigBuildJarEmbJetty(type: Jar) {
-    group 'build'
-    baseName 'Assig1EmbJetty'
-    manifest { attributes 'Main-Class': 'com.tpjad.servlet.assig.JettyServer' }
-    from sourceSets.main.output
-    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) })
-    exclude "META-INF/*.SF", "META-INF/*.RSA", "about.html", "about_files/**", "readme.txt", "plugin.properties", "jetty-dir.css"
-    outputs.upToDateWhen { false }
-}
+task clean(type: Delete) {
+    group "build"
+    dependsOn(":common:clean", ":tomcat:clean", ":jetty:clean")
 
-task assigBuildJarEmbTomcat(type: Jar) {
-    group 'build'
-    baseName 'Assig1EmbTomcat'
-    manifest { attributes 'Main-Class': 'com.tpjad.servlet.assig.TomcatServer' }
-    from sourceSets.main.output
-    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) })
-    exclude "META-INF/*.SF", "META-INF/*.RSA", "about.html", "about_files/**", "readme.txt", "plugin.properties", "jetty-dir.css"
-    outputs.upToDateWhen { false }
+    delete = ["build"]
 }

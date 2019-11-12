@@ -1,4 +1,4 @@
-package com.tpjad.servlet.assig;
+package com.tpjad.servlet.assig.embeddedServers.jetty;
 
 import com.tpjad.servlet.assig.servlets.Hello;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
