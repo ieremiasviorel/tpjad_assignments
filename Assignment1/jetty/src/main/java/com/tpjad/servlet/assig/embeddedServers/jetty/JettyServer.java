@@ -1,5 +1,6 @@
 package com.tpjad.servlet.assig.embeddedServers.jetty;
 
+import com.tpjad.servlet.assig.config.ConfigurationProperties;
 import com.tpjad.servlet.assig.servlets.Hello;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
@@ -11,11 +12,13 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 public class JettyServer {
     public static void main(String[] args) throws Exception {
+        String webAppDir = ConfigurationProperties.getConfigProperty("webapp.path.absolute");
+
         Server server = new Server(8080);
         WebAppContext context = new WebAppContext();
         server.setHandler(context);
 
-        context.setResourceBase("src/main/webapp");
+        context.setResourceBase(webAppDir);
         context.setContextPath("/");
 
         context.addServlet(Hello.class, "");
