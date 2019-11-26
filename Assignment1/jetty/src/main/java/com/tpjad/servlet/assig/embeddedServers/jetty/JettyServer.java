@@ -1,7 +1,8 @@
 package com.tpjad.servlet.assig.embeddedServers.jetty;
 
 import com.tpjad.servlet.assig.config.ConfigurationProperties;
-import com.tpjad.servlet.assig.servlets.Hello;
+import com.tpjad.servlet.assig.servlets.CitiesServlet;
+import com.tpjad.servlet.assig.servlets.ClientServlet;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.server.Server;
@@ -21,7 +22,8 @@ public class JettyServer {
         context.setResourceBase(webAppDir);
         context.setContextPath("/");
 
-        context.addServlet(Hello.class, "");
+        context.addServlet(CitiesServlet.class, "/cities");
+        context.addServlet(ClientServlet.class, "");
 
         context.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/[^/]*jstl.*\\.jar$");
         Configuration.ClassList classList = Configuration.ClassList.setServerDefault(server);

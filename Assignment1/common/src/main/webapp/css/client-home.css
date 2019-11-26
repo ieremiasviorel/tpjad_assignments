@@ -1,0 +1,30 @@
+#flights-table {
+	float: left;
+	width: 70%;
+	border: none;
+}
+
+#flights-table th {
+	height: 60px;
+	line-height: 60px;
+	text-align: left;
+}
+
+#flights-table td {
+	height: 30px;
+	line-height: 30px;
+}
+
+#flights-table tr:hover {
+	background-color: #D0D0D0;
+}
+
+#flight-info-table {
+	float: left;
+	width: 30%;
+	background-color: #F8E8BC;
+}
+
+#flight-info-table th {
+	text-align: left;
+}
