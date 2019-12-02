@@ -1,7 +1,15 @@
-package com.tpjad.servlet.assig.entities;
+package com.tpjad.ejb.assig.entities;
 
-public class City implements Comparable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
 
+@Entity
+public class City implements Serializable, Comparable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQMYCLASSID")
     private int id;
     private String name;
     private String country;
@@ -10,22 +18,6 @@ public class City implements Comparable {
 
     public City() {
         super();
-    }
-
-    public City(int id, String name, float latitude, float longitude, String country) {
-        this.id = id;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.country = country;
-    }
-
-    public City(int id, String name, String country, float latitude, float longitude) {
-        this.id = id;
-        this.name = name;
-        this.country = country;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     public int getId() {
@@ -73,5 +65,15 @@ public class City implements Comparable {
         if (this == o) return 0;
         if (!(o instanceof City)) return -1;
         return getName().compareTo(((City) o).getName());
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude + '}';
     }
 }
