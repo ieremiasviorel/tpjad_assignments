@@ -15,6 +15,8 @@ public class FlightFilter {
     private String arrivalCity;
     private Date departureStartDate;
     private Date departureEndDate;
+    private Date arrivalStartDate;
+    private Date arrivalEndDate;
 
     public FlightFilter() {
         super();
@@ -28,6 +30,17 @@ public class FlightFilter {
         this.arrivalCity = arrivalCity;
         this.departureStartDate = departureStartDate;
         this.departureEndDate = departureEndDate;
+    }
+
+    public FlightFilter(String departureCountry, String departureCity, String arrivalCountry, String arrivalCity, Date departureStartDate, Date departureEndDate, Date arrivalStartDate, Date arrivalEndDate) {
+        this.departureCountry = departureCountry;
+        this.departureCity = departureCity;
+        this.arrivalCountry = arrivalCountry;
+        this.arrivalCity = arrivalCity;
+        this.departureStartDate = departureStartDate;
+        this.departureEndDate = departureEndDate;
+        this.arrivalStartDate = arrivalStartDate;
+        this.arrivalEndDate = arrivalEndDate;
     }
 
     public String getDepartureCountry() {
@@ -66,6 +79,10 @@ public class FlightFilter {
         return departureStartDate;
     }
 
+    public String getDepartureStartDateStr() {
+        return departureStartDate != null ? dateFormat.format(departureStartDate) : "";
+    }
+
     public void setDepartureStartDate(Date departureStartDate) {
         this.departureStartDate = departureStartDate;
     }
@@ -74,8 +91,36 @@ public class FlightFilter {
         return departureEndDate;
     }
 
+    public String getDepartureEndDateStr() {
+        return departureEndDate != null ? dateFormat.format(departureEndDate) : "";
+    }
+
     public void setDepartureEndDate(Date departureEndDate) {
         this.departureEndDate = departureEndDate;
+    }
+
+    public Date getArrivalStartDate() {
+        return arrivalStartDate;
+    }
+
+    public String getArrivalStartDateStr() {
+        return arrivalStartDate != null ? dateFormat.format(arrivalStartDate) : "";
+    }
+
+    public void setArrivalStartDate(Date arrivalStartDate) {
+        this.arrivalStartDate = arrivalStartDate;
+    }
+
+    public Date getArrivalEndDate() {
+        return arrivalEndDate;
+    }
+
+    public String getArrivalEndDateStr() {
+        return arrivalEndDate != null ? dateFormat.format(arrivalEndDate) : "";
+    }
+
+    public void setArrivalEndDate(Date arrivalEndDate) {
+        this.arrivalEndDate = arrivalEndDate;
     }
 
     @Override

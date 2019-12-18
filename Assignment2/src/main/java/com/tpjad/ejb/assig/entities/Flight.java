@@ -9,15 +9,19 @@ public class Flight implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQMYCLASSID")
     private int id;
+    @Column(name = "flight_number")
     private String flightNumber;
+    @Column(name = "airplane_type")
     private String airplaneType;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "departureCity")
+    @JoinColumn(name = "departure_city")
     private City departureCity;
+    @Column(name = "departure_date")
     private Date departureDate;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "arrivalCity")
+    @JoinColumn(name = "arrival_city")
     private City arrivalCity;
+    @Column(name = "arrival_date")
     private Date arrivalDate;
 
     public Flight() {

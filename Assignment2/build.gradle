@@ -1,5 +1,5 @@
 plugins {
-    id 'war'
+    id "war"
 }
 
 repositories {
@@ -8,5 +8,10 @@ repositories {
 }
 
 dependencies {
-    providedCompile 'javax:javaee-api:+'
+    providedCompile "javax:javaee-api:+"
+    compile "com.fasterxml.jackson.core:jackson-databind:+"
+}
+
+war {
+    baseName "Assig2WAR"
 }

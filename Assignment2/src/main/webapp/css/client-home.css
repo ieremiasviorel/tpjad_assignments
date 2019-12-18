@@ -1,0 +1,31 @@
+body {
+    width: 70%;
+    margin: auto;
+}
+
+label {
+    width: 75px;
+    line-height: 28px;
+}
+
+.form-control {
+    display: inline-block;
+    width: 160px;
+    height: 28px;
+    padding: 0px;
+}
+
+#flights-table th {
+    height: 60px;
+    line-height: 60px;
+    text-align: left;
+}
+
+#flights-table td {
+    height: 30px;
+    line-height: 30px;
+}
+
+button {
+    margin: 10px 20px 10px 0;
+}
