@@ -99,6 +99,6 @@ public class FlightBeanImpl implements FlightServiceLocal, FlightServiceRemote {
             default:
                 op = " = ";
         }
-        return fieldName + op + "\"" + fieldValue + "\" ";
+        return fieldName + op + "'" + fieldValue + "'";
     }
 }
