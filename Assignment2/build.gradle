@@ -15,3 +15,18 @@ dependencies {
 war {
     baseName "Assig2WAR"
 }
+
+task autoDeploy(type: Copy) {
+    group "build"
+    dependsOn("war", "cleanDeploySite")
+
+    from "${buildDir}/libs"
+    into "C:\\Servers\\Wildfly16.0\\standalone\\deployments"
+}
+
+task cleanDeploySite(type: Delete) {
+    delete fileTree("C:\\Servers\\Wildfly16.0\\standalone\\deployments")
+}
+
+// C:\Servers\Glassfish5.0\glassfish\domains\domain1\autodeploy
+// C:\Servers\Wildfly16.0\standalone\deployments
