@@ -2,8 +2,10 @@ package com.tpjad.ejb.assig.clients;
 
 import com.tpjad.ejb.assig.beans.interfaces.CityServiceRemote;
 import com.tpjad.ejb.assig.beans.interfaces.FlightServiceRemote;
+import com.tpjad.ejb.assig.entities.City;
 
 import javax.naming.InitialContext;
+import java.util.List;
 import java.util.Properties;
 
 public class Client {
@@ -18,10 +20,16 @@ public class Client {
     static final String JNDIFlightService = "Assig2WAR/FlightBeanImpl!com.tpjad.ejb.assig.beans.interfaces.FlightServiceRemote";
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Client7JB");
         CityServiceRemote cityServiceProxy = (CityServiceRemote) (new InitialContext(JNDI).lookup(JNDICityService));
         FlightServiceRemote flightServiceProxy = (FlightServiceRemote) (new InitialContext(JNDI).lookup(JNDIFlightService));
 
-        cityServiceProxy.getAllCountries().forEach(System.out::println);
+        List<String> countries = cityServiceProxy.getAllCountries();
+
+        countries.forEach(country -> {
+            List<City> cities = cityServiceProxy.getByCountry(country);
+
+            System.out.println("[ " + country + " ]");
+            cities.forEach(city -> System.out.println(" - " + city.getName()));
+        });
     }
 }

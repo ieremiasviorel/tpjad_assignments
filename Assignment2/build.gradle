@@ -2,6 +2,11 @@ plugins {
     id "war"
 }
 
+project.ext {
+    glassfishDeploy = "C:\\Servers\\Glassfish5.0\\glassfish\\domains\\domain1\\autodeploy"
+    wildflyDeploy = "C:\\Servers\\Wildfly16.0\\standalone\\deployments"
+}
+
 repositories {
     mavenCentral()
     jcenter()
@@ -16,17 +21,26 @@ war {
     baseName "Assig2WAR"
 }
 
-task autoDeploy(type: Copy) {
+task autoDeployGlassfish(type: Copy) {
     group "build"
-    dependsOn("war", "cleanDeploySite")
+    dependsOn("war", "cleanGlassfishDeploySite")
 
     from "${buildDir}/libs"
-    into "C:\\Servers\\Wildfly16.0\\standalone\\deployments"
+    into project.glassfishDeploy
 }
 
-task cleanDeploySite(type: Delete) {
-    delete fileTree("C:\\Servers\\Wildfly16.0\\standalone\\deployments")
+task autoDeployWildfly(type: Copy) {
+    group "build"
+    dependsOn("war", "cleanWildflyDeploySite")
+
+    from "${buildDir}/libs"
+    into project.wildflyDeploy
 }
 
-// C:\Servers\Glassfish5.0\glassfish\domains\domain1\autodeploy
-// C:\Servers\Wildfly16.0\standalone\deployments
+task cleanGlassfishDeploySite(type: Delete) {
+    delete fileTree(project.glassfishDeploy)
+}
+
+task cleanWildflyDeploySite(type: Delete) {
+    delete fileTree(project.wildflyDeploy)
+}
