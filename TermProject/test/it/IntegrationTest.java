@@ -8,9 +8,9 @@ import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.test.WithApplication;
-import v1.post.PostData;
-import v1.post.PostRepository;
-import v1.post.PostResource;
+import post.PostData;
+import post.PostRepository;
+import post.PostResource;
 
 import java.util.Iterator;
 import java.util.Optional;

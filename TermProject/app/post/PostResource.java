@@ -1,4 +1,4 @@
-package v1.post;
+package post;
 
 /**
  * Resource for the API.  This is a presentation class for frontend work.

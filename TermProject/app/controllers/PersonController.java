@@ -1,7 +1,7 @@
 package controllers;
 
-import models.Person;
-import models.PersonRepository;
+import person.Person;
+import person.PersonRepository;
 import play.data.FormFactory;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
@@ -32,15 +32,11 @@ public class PersonController extends Controller {
         this.ec = ec;
     }
 
-    public Result index(final Http.Request request) {
-        return ok(views.html.person.render(request));
-    }
-
     public CompletionStage<Result> addPerson(final Http.Request request) {
         Person person = formFactory.form(Person.class).bindFromRequest(request).get();
         return personRepository
                 .add(person)
-                .thenApplyAsync(p -> redirect(routes.PersonController.getPersons()), ec.current());
+                .thenApplyAsync(p -> redirect("/persons"), ec.current());
     }
 
     public CompletionStage<Result> getPersons() {
@@ -48,5 +44,4 @@ public class PersonController extends Controller {
                 .list()
                 .thenApplyAsync(personStream -> ok(toJson(personStream.collect(Collectors.toList()))), ec.current());
     }
-
 }

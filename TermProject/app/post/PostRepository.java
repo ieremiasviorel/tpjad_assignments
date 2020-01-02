@@ -1,4 +1,4 @@
-package v1.post;
+package post;
 
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;

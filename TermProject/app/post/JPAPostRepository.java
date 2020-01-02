@@ -1,4 +1,4 @@
-package v1.post;
+package post;
 
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;

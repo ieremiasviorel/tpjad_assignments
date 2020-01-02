@@ -1,4 +1,4 @@
-package v1.post;
+package post;
 
 import com.palominolabs.http.url.UrlBuilder;
 import play.libs.concurrent.HttpExecutionContext;

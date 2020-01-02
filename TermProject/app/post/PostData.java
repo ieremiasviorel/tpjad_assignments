@@ -1,4 +1,4 @@
-package v1.post;
+package post;
 
 import javax.persistence.*;
 
