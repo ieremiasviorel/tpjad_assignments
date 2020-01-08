@@ -1,0 +1,15 @@
+@import java.util.concurrent.CompletableFuture
+@import java.util
+@import utils.Timing
+@(calls: util.List[CompletableFuture[Timing]])
+
+<html>
+    <head></head>
+    <body>
+        @for(index <- 0 until calls.size) {
+            <li>
+            @calls(index).get().url | @calls(index).get().latency ms
+            </li>
+        }
+    </body>
+</html>
