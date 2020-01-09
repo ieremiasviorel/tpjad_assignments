@@ -8,7 +8,10 @@
     <body>
         @for(index <- 0 until calls.size) {
             <li>
-            @calls(index).get().url | @calls(index).get().latency ms
+                URL: <a href="@calls(index).get().url">@calls(index).get().url</a> |
+                START: @calls(index).get().start |
+                END: @calls(index).get().end |
+                LATENCY: @calls(index).get().latency
             </li>
         }
     </body>
