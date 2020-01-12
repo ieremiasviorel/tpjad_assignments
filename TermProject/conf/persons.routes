@@ -1,3 +1,2 @@
-
-GET     /                    controllers.PersonController.getPersons()
-POST    /                    controllers.PersonController.addPerson(request: Request)
+GET         /        controllers.PersonController.getPersons()
+POST        /        controllers.PersonController.addPerson(request: Request)
