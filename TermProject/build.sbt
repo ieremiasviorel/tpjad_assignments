@@ -5,9 +5,6 @@ lazy val root = (project in file("."))
     version := "2.8.x",
     scalaVersion := "2.13.1",
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
-    resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-    resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2",
-    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
@@ -16,7 +13,7 @@ lazy val root = (project in file("."))
       "io.dropwizard.metrics" % "metrics-core" % "4.1.1",
       "com.palominolabs.http" % "url-builder" % "1.1.0",
       "net.jodah" % "failsafe" % "2.3.1",
-      "ws.securesocial" %% "securesocial" % "2.13",
+      "be.objectify" %% "deadbolt-java" % "2.7.1"
     ),
     PlayKeys.externalizeResources := false,
     testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),

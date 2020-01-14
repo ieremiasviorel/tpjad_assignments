@@ -2,5 +2,9 @@
   "/persons": {
     "target": "http://localhost:9000",
     "secure": false
+  },
+  "/authenticate/google": {
+    "target": "http://localhost:9000",
+    "secure": false
   }
 }
