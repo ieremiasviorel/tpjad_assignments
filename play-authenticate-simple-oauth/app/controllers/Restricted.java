@@ -31,7 +31,6 @@ public class Restricted extends Controller {
 
     public Result indexById(String directoryId) {
         final User localUser = this.userService.getLocalUser(this.auth.getUser(session()));
-        System.out.println(directoryId);
         final DirectoryItem directory = DirectoryItem.getById(Long.parseLong(directoryId));
         final List<DirectoryItem> directoryAncestors = directory.getAncestors();
 

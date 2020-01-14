@@ -21,8 +21,8 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                @for(dir <- directoryAncestors) {
-                    <li class="breadcrumb-item"><a href="@dir.id">@dir.name</a></li>
+                @for(directory <- directoryAncestors) {
+                    <li class="breadcrumb-item"><a href="@directory.id">@directory.name</a></li>
                 }
                 <li class="breadcrumb-item" aria-current="page">@directory.name</li>
             </ol>
