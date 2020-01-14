@@ -1,0 +1,76 @@
+@(
+        playAuth: com.feth.play.module.pa.PlayAuthenticate,
+        localUser: models.User = null,
+        directory: models.DirectoryItem,
+        directoryAncestors: List[models.DirectoryItem]
+)
+
+    @import com.feth.play.module.pa.views.html._
+
+    @main("I can haz secrets!") {
+
+        @currentAuth(playAuth) { auth =>
+            @if(auth != null) {
+                <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+                <br/>
+                <br/>
+            }
+        }
+
+        <h1>@directory.name</h1>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                @for(dir <- directoryAncestors) {
+                    <li class="breadcrumb-item"><a href="@dir.id">@dir.name</a></li>
+                }
+                <li class="breadcrumb-item" aria-current="page">@directory.name</li>
+            </ol>
+        </nav>
+
+        <h2>Directories</h2>
+
+        @for(index <- 0 until directory.childrenDirectories.size) {
+            <button type="button" class="btn btn-light" onclick="location.href = '@directory.childrenDirectories(index).id';">
+            @directory.childrenDirectories(index).name
+            </button>
+        }
+
+        <h2>Files</h2>
+        <ul>
+        @for(index <- 0 until directory.childrenFiles.size) {
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">@directory.childrenFiles(index).name
+                        .@directory.childrenFiles(index).extension</p>
+                </div>
+            </div>
+        }
+        </ul>
+
+        <h1>Sshhh...don't tell anyone!</h1>
+        <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>
+        </p>
+        <p>
+            Your name is @localUser.name and your email address is @localUser.email
+            <i>
+            @if(!localUser.emailValidated) {
+                (unverified)
+            } else {
+                (verified)
+            }</i>!
+
+            <br/>
+            @currentAuth(playAuth) { auth =>
+                Logged in with provider '@auth.getProvider()' and the user ID '@auth.getId()'<br/>
+                Your session expires
+                @if(auth.expires() == -1) {
+                    never
+                } else {
+                    at @auth.expires() (UNIX timestamp)
+            }
+            }
+        </p>
+    }
