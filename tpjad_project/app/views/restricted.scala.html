@@ -7,7 +7,7 @@
 
     @import com.feth.play.module.pa.views.html._
 
-    @main("I can haz secrets!") {
+    @main("Play File Manager") {
 
         @currentAuth(playAuth) { auth =>
             @if(auth != null) {
@@ -21,8 +21,10 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                @for(directory <- directoryAncestors) {
-                    <li class="breadcrumb-item"><a href="@directory.id">@directory.name</a></li>
+                @for(dir <- directoryAncestors) {
+                    <li class="breadcrumb-item">
+                        <a href="@dir.id">@dir.name</a>
+                    </li>
                 }
                 <li class="breadcrumb-item" aria-current="page">@directory.name</li>
             </ol>
@@ -30,9 +32,9 @@
 
         <h2>Directories</h2>
 
-        @for(index <- 0 until directory.childrenDirectories.size) {
-            <button type="button" class="btn btn-light" onclick="location.href = '@directory.childrenDirectories(index).id';">
-            @directory.childrenDirectories(index).name
+        @for(dir <- directory.childrenDirectories) {
+            <button type="button" class="btn btn-light" onclick="location.href = '@dir.id';">
+            @dir.name
             </button>
         }
 
@@ -49,18 +51,8 @@
         }
         </ul>
 
-        <h1>Sshhh...don't tell anyone!</h1>
-        <p>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>
-        </p>
         <p>
             Your name is @localUser.name and your email address is @localUser.email
-            <i>
-            @if(!localUser.emailValidated) {
-                (unverified)
-            } else {
-                (verified)
-            }</i>!
 
             <br/>
             @currentAuth(playAuth) { auth =>

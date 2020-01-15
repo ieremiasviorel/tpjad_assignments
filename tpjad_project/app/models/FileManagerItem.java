@@ -17,25 +17,12 @@ public class FileManagerItem extends AppModel {
 
     public String name;
 
-    public String path;
-
     @ManyToOne(optional = true)
     public DirectoryItem parent;
 
     public FileManagerItem(String name, DirectoryItem parent) {
         this.name = name;
         this.parent = parent;
-        this.path = computePath();
-    }
-
-    public String computePath() {
-        List<DirectoryItem> ancestors = getAncestors();
-
-        Optional<String> pathOptional = ancestors.stream()
-                .map(d -> d.name)
-                .reduce((acc, curr) -> acc + "/" + curr);
-
-        return pathOptional.orElse("");
     }
 
     public List<DirectoryItem> getAncestors() {
