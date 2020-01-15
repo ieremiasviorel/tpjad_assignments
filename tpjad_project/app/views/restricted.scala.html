@@ -17,10 +17,10 @@
         }
     }
 
-    <h1>@directory.name</h1>
+    <h1>Play File Manager</h1>
 
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="font-size: 24px">
             @for(dir <- directoryAncestors) {
                 <li class="breadcrumb-item">
                     <a href="@dir.id">@dir.name</a>
@@ -30,12 +30,24 @@
         </ol>
     </nav>
 
-    <h2>Directories</h2>
+    <p style="font-size: 20px">Folders</p>
 
     @for(dir <- directory.childrenDirectories) {
-        <button type="button" class="btn btn-light" onclick="location.href = '@dir.id';">
-        @dir.name
-        </button>
+        <div class="card" style="display: inline-block;
+            width: 16rem;
+            margin-right: 1rem;
+            cursor: pointer;"
+        ondblclick="location.href = '/restricted/@dir.id';">
+            <div class="card-body" style="padding: 0.75rem;">
+                <span>
+                    <i class="material-icons">
+                        folder
+                    </i>
+                    <p class="card-text" style="display: inline-block;
+                        font-size: 24px">@dir.name</p>
+                </span>
+            </div>
+        </div>
     }
 
     <form method="POST" enctype="multipart/form-data">
@@ -47,18 +59,25 @@
         </label>
     </form>
 
-    <h2>Files</h2>
-    <ul>
+    <p style="font-size: 20px">Files</p>
+
     @for(file <- directory.childrenFiles) {
-        <div class="card" style="width: 18rem;
+        <div class="card" style="display: inline-block;
+            width: 16rem;
+            margin-right: 1rem;
             cursor: pointer;"
         ondblclick="location.href = '/restricted/download/@file.id';">
-            <div class="card-body">
-                <p class="card-text">@file.name</p>
+            <div class="card-body" style="padding: 0.75rem;">
+                <span>
+                    <i class="material-icons">
+                        insert_drive_file
+                    </i>
+                    <p class="card-text" style="display: inline-block;
+                        font-size: 24px">@file.name</p>
+                </span>
             </div>
         </div>
     }
-    </ul>
 
     <p>
         Your name is @localUser.name and your email address is @localUser.email
@@ -71,7 +90,7 @@
                 never
             } else {
                 at @auth.expires() (UNIX timestamp)
-        }
+            }
         }
     </p>
 }
