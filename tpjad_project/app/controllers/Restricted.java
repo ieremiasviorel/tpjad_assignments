@@ -65,4 +65,15 @@ public class Restricted extends Controller {
 
         return redirect("/restricted/" + directoryIdStr);
     }
+
+    public Result create(String directoryIdStr) {
+        DirectoryItem parentDirectory = DirectoryItem.getById(Long.parseLong(directoryIdStr));
+
+        String newDirectoryName = request().body().asFormUrlEncoded().get("directoryName")[0];
+        DirectoryItem directoryItem = new DirectoryItem(newDirectoryName, parentDirectory);
+
+        directoryItem.save();
+
+        return redirect("/restricted/" + directoryIdStr);
+    }
 }
