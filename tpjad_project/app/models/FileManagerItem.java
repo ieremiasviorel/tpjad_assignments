@@ -1,23 +1,18 @@
 package models;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @MappedSuperclass
 public class FileManagerItem extends AppModel {
-
-    private static final long serialVersionUID = 1L;
 
     @Id
     public Long id;
 
     public String name;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     public DirectoryItem parent;
 
     public FileManagerItem(String name, DirectoryItem parent) {
@@ -25,13 +20,22 @@ public class FileManagerItem extends AppModel {
         this.parent = parent;
     }
 
+    @Override
+    public String toString() {
+        return "FileManagerItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parent=" + parent +
+                '}';
+    }
+
     public List<DirectoryItem> getAncestors() {
         List<DirectoryItem> ancestors = new ArrayList<>();
 
-        DirectoryItem current = parent;
+        DirectoryItem current = parent != null ? DirectoryItem.getById(parent.id) : null;
         while (current != null) {
             ancestors.add(0, current);
-            current = current.parent;
+            current = current.parent != null ? DirectoryItem.getById(current.parent.id) : null;
         }
 
         return ancestors;
