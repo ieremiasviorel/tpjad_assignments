@@ -2,14 +2,17 @@ package controllers;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import models.DirectoryItem;
+import models.FileItem;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import service.FileService;
 import service.UserService;
 import views.html.restricted;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.util.List;
 
 @Security.Authenticated(Secured.class)
@@ -35,5 +38,20 @@ public class Restricted extends Controller {
         final List<DirectoryItem> directoryAncestors = directory.getAncestors();
 
         return ok(restricted.render(this.auth, localUser, directory, directoryAncestors));
+    }
+
+    public Result download(String fileId) {
+        Long id = Long.parseLong(fileId);
+
+        FileItem fileItem = FileItem.getById(id);
+
+        String fileName = FileService.computeFileName(fileItem);
+        String filePath = FileService.computeFilePath(fileItem);
+
+        File file = FileService.downloadFile(filePath);
+
+        response().setContentType("application/x-download");
+        response().setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
+        return ok(file);
     }
 }

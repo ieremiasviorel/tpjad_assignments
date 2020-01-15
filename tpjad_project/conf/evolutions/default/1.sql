@@ -14,7 +14,6 @@ create table file_item (
   id                            bigint auto_increment not null,
   name                          varchar(255),
   parent_id                     bigint,
-  data_id                       varchar(255),
   extension                     varchar(255),
   constraint pk_file_item primary key (id)
 );

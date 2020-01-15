@@ -2,6 +2,8 @@
 
 GET        /                                     controllers.Application.index
 GET        /restricted                           controllers.Restricted.index
+GET        /restricted/download/:fileId          controllers.Restricted.download(fileId)
+
 GET        /restricted/:directoryId              controllers.Restricted.indexById(directoryId)
 
 GET        /logout                               com.feth.play.module.pa.controllers.Authenticate.logout

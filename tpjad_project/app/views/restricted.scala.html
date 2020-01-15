@@ -40,12 +40,10 @@
 
         <h2>Files</h2>
         <ul>
-        @for(index <- 0 until directory.childrenFiles.size) {
-            <div class="card" style="width: 18rem;">
-                <img src="" class="card-img-top" alt="...">
+        @for(file <- directory.childrenFiles) {
+            <div class="card" style="width: 18rem;cursor:pointer;"  onclick="location.href = '/restricted/download/@file.id';">
                 <div class="card-body">
-                    <p class="card-text">@directory.childrenFiles(index).name
-                        .@directory.childrenFiles(index).extension</p>
+                    <p class="card-text">@file.name.@file.extension</p>
                 </div>
             </div>
         }
