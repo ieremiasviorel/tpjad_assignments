@@ -5,6 +5,7 @@ import io.ebean.Finder;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +13,14 @@ import java.util.List;
 @Entity
 public class DirectoryItem extends FileManagerItem {
 
-    private static final long serialVersionUID = 1L;
-
     @OneToMany(
             mappedBy = "parent",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            fetch = FetchType.EAGER)
     public List<FileItem> childrenFiles = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "parent",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            fetch = FetchType.EAGER)
     public List<DirectoryItem> childrenDirectories = new ArrayList<>();
 
     public DirectoryItem(String name, DirectoryItem parent) {
