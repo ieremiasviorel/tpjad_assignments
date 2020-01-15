@@ -1,7 +1,9 @@
 package models;
 
-import javax.persistence.*;
-import java.io.File;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import java.util.ArrayList;
 import java.util.List;
 

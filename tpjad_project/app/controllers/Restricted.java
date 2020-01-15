@@ -41,33 +41,28 @@ public class Restricted extends Controller {
         return ok(restricted.render(this.auth, localUser, directory, directoryAncestors));
     }
 
-    public Result download(String fileId) {
-        Long id = Long.parseLong(fileId);
+    public Result download(String fileIdStr) {
+        Long fileId = Long.parseLong(fileIdStr);
 
-        FileItem fileItem = FileItem.getById(id);
-
-        String fileName = FileService.computeFileName(fileItem);
-        String filePath = FileService.computeFilePath(fileItem);
-
+        FileItem fileItem = FileItem.getById(fileId);
+        String filePath = FileService.getFilePath(fileItem);
         File file = FileService.downloadFile(filePath);
 
-        response().setContentType("application/x-download");
-        response().setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
+        response().setHeader("Content-disposition", "attachment; filename=\"" + fileItem.name + "\"");
         return ok(file);
     }
 
-    public Result upload(String directoryId) {
+    public Result upload(String directoryIdStr) {
         Http.MultipartFormData data = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = data.getFile("file");
 
         File file = (File) filePart.getFile();
         String fileName = filePart.getFilename();
 
-        if (!FileService.uploadFile(file, fileName, directoryId)) {
-            //exception
-            System.out.println("TODO");
+        if (!FileService.uploadFile(file, fileName, Long.parseLong(directoryIdStr))) {
+            System.err.println("Error uploading fileȘ " + fileName);
         }
 
-        return redirect("/restricted/" + directoryId);
+        return redirect("/restricted/" + directoryIdStr);
     }
 }

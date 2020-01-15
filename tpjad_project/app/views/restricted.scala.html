@@ -1,76 +1,77 @@
 @(
-playAuth: com.feth.play.module.pa.PlayAuthenticate,
-localUser: models.User = null,
-directory: models.DirectoryItem,
-directoryAncestors: List[models.DirectoryItem]
+        playAuth: com.feth.play.module.pa.PlayAuthenticate,
+        localUser: models.User = null,
+        directory: models.DirectoryItem,
+        directoryAncestors: List[models.DirectoryItem]
 )
 
 @import com.feth.play.module.pa.views.html._
 
 @main("Play File Manager") {
 
-@currentAuth(playAuth) { auth =>
-@if(auth != null) {
-<a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
-<br/>
-<br/>
-}
-}
-
-<h1>@directory.name</h1>
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        @for(dir <- directoryAncestors) {
-        <li class="breadcrumb-item">
-            <a href="@dir.id">@dir.name</a>
-        </li>
-        }
-        <li class="breadcrumb-item" aria-current="page">@directory.name</li>
-    </ol>
-</nav>
-
-<h2>Directories</h2>
-
-@for(dir <- directory.childrenDirectories) {
-<button type="button" class="btn btn-light" onclick="location.href = '@dir.id';">
-    @dir.name
-</button>
-}
-
-<form method="POST" enctype="multipart/form-data">
-    <label for="upload">
-        <i class="material-icons">
-            note_add
-        </i>
-        <input type="file" id="upload" name="file" style="display:none" onchange="form.submit()">
-    </label>
-</form>
-
-<h2>Files</h2>
-<ul>
-    @for(file <- directory.childrenFiles) {
-    <div class="card" style="width: 18rem;cursor:pointer;"
-         ondblclick="location.href = '/restricted/download/@file.id';">
-        <div class="card-body">
-            <p class="card-text">@file.name.@file.extension</p>
-        </div>
-    </div>
-    }
-</ul>
-
-<p>
-    Your name is @localUser.name and your email address is @localUser.email
-
-    <br/>
     @currentAuth(playAuth) { auth =>
-    Logged in with provider '@auth.getProvider()' and the user ID '@auth.getId()'<br/>
-    Your session expires
-    @if(auth.expires() == -1) {
-    never
-    } else {
-    at @auth.expires() (UNIX timestamp)
+        @if(auth != null) {
+            <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+            <br/>
+            <br/>
+        }
     }
+
+    <h1>@directory.name</h1>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @for(dir <- directoryAncestors) {
+                <li class="breadcrumb-item">
+                    <a href="@dir.id">@dir.name</a>
+                </li>
+            }
+            <li class="breadcrumb-item" aria-current="page">@directory.name</li>
+        </ol>
+    </nav>
+
+    <h2>Directories</h2>
+
+    @for(dir <- directory.childrenDirectories) {
+        <button type="button" class="btn btn-light" onclick="location.href = '@dir.id';">
+        @dir.name
+        </button>
     }
-</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="upload">
+            <i class="material-icons">
+                note_add
+            </i>
+            <input type="file" id="upload" name="file" style="display: none" onchange="form.submit()">
+        </label>
+    </form>
+
+    <h2>Files</h2>
+    <ul>
+    @for(file <- directory.childrenFiles) {
+        <div class="card" style="width: 18rem;
+            cursor: pointer;"
+        ondblclick="location.href = '/restricted/download/@file.id';">
+            <div class="card-body">
+                <p class="card-text">@file.name</p>
+            </div>
+        </div>
+    }
+    </ul>
+
+    <p>
+        Your name is @localUser.name and your email address is @localUser.email
+
+        <br/>
+        @currentAuth(playAuth) { auth =>
+            Logged in with provider '@auth.getProvider()' and the user ID '@auth.getId()'<br/>
+            Your session expires
+            @if(auth.expires() == -1) {
+                never
+            } else {
+                at @auth.expires() (UNIX timestamp)
+        }
+        }
+    </p>
 }
