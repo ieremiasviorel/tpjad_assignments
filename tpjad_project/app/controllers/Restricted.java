@@ -5,6 +5,7 @@ import models.DirectoryItem;
 import models.FileItem;
 import models.User;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import service.FileService;
@@ -53,5 +54,20 @@ public class Restricted extends Controller {
         response().setContentType("application/x-download");
         response().setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
         return ok(file);
+    }
+
+    public Result upload(String directoryId) {
+        Http.MultipartFormData data = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart filePart = data.getFile("file");
+
+        File file = (File) filePart.getFile();
+        String fileName = filePart.getFilename();
+
+        if (!FileService.uploadFile(file, fileName, directoryId)) {
+            //exception
+            System.out.println("TODO");
+        }
+
+        return redirect("/restricted/" + directoryId);
     }
 }

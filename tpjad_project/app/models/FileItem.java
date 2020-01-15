@@ -11,8 +11,9 @@ public class FileItem extends FileManagerItem {
 
     public String extension;
 
-    public FileItem(String name, DirectoryItem parent) {
+    public FileItem(String name, DirectoryItem parent, String extension) {
         super(name, parent);
+        this.extension = extension;
     }
 
     public static final Finder<Long, FileItem> find = new Finder<Long, FileItem>(FileItem.class);
