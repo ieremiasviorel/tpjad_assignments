@@ -28,4 +28,12 @@ public class FileService {
     public static String getFilePath(FileItem fileItem) {
         return USER_DIRECTORY + "/" + hash(fileItem.id);
     }
+
+    public static void deleteFile(FileItem fileItem) {
+        String path = getFilePath(fileItem);
+        File file = new File(path);
+        if (file.delete()) {
+            fileItem.delete();
+        }
+    }
 }

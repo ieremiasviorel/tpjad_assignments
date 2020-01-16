@@ -106,4 +106,11 @@ public class Restricted extends Controller {
 
         return redirect("/restricted/" + directoryIdStr);
     }
+
+    public Result delete(String fileIdStr) {
+        FileItem fileItem = FileItem.getById(Long.parseLong(fileIdStr));
+        FileService.deleteFile(fileItem);
+
+        return redirect("/restricted/" + fileItem.parent.id);
+    }
 }
