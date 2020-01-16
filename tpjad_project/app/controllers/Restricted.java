@@ -107,10 +107,27 @@ public class Restricted extends Controller {
         return redirect("/restricted/" + directoryIdStr);
     }
 
-    public Result delete(String fileIdStr) {
+    public Result deleteFile(String fileIdStr) {
         FileItem fileItem = FileItem.getById(Long.parseLong(fileIdStr));
+
+        if (!checkUserPermission(fileItem.parent.id)) {
+            return unauthorized();
+        }
+
         FileService.deleteFile(fileItem);
 
         return redirect("/restricted/" + fileItem.parent.id);
+    }
+
+    public Result deleteDirectory(String directoryIdStr) {
+        DirectoryItem directoryItem = DirectoryItem.getById(Long.parseLong(directoryIdStr));
+
+        if (!checkUserPermission(directoryItem.id)) {
+            return unauthorized();
+        }
+
+        FileService.deleteDirectory(directoryItem);
+        
+        return redirect("/restricted/" + directoryItem.parent.id);
     }
 }

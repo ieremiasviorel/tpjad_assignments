@@ -39,6 +39,10 @@ directoryAncestors: List[models.DirectoryItem]
             margin: 0 1rem 1rem 0;
             cursor: pointer;"
      ondblclick="location.href = '/restricted/@dir.id';">
+    <i class="material-icons" style="float:right; color:red" onclick="location.href = '/restricted/deleteDirectory/@dir.id';">
+        delete
+    </i>
+
     <div class="card-body" style="padding: 0.75rem;">
                 <span>
                     <i class="material-icons">
@@ -60,7 +64,7 @@ directoryAncestors: List[models.DirectoryItem]
             cursor: pointer;"
      ondblclick="location.href = '/restricted/download/@file.id';">
 
-    <i class="material-icons" style="float:right; color:red" onclick="location.href = '/restricted/delete/@file.id';">
+    <i class="material-icons" style="float:right; color:red" onclick="location.href = '/restricted/deleteFile/@file.id';">
         delete
     </i>
 
