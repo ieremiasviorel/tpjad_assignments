@@ -9,8 +9,6 @@ import javax.persistence.*;
 @Table(name = "linked_accounts")
 public class LinkedAccount extends AppModel {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     public Long id;
 
@@ -26,7 +24,7 @@ public class LinkedAccount extends AppModel {
     @MapsId
     public DirectoryItem rootDirectory;
 
-    public static final Finder<Long, LinkedAccount> find = new Finder<Long, LinkedAccount>(LinkedAccount.class);
+    public static final Finder<Long, LinkedAccount> find = new Finder<>(LinkedAccount.class);
 
     public static LinkedAccount findByProviderKey(final User user, String key) {
         return find.query().where().eq("user", user).eq("providerKey", key)

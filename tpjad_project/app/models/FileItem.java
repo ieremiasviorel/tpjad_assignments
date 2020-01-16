@@ -11,7 +11,7 @@ public class FileItem extends FileManagerItem {
         super(name, parent);
     }
 
-    public static final Finder<Long, FileItem> find = new Finder<Long, FileItem>(FileItem.class);
+    public static final Finder<Long, FileItem> find = new Finder<>(FileItem.class);
 
     public static FileItem getById(final Long id) {
         return find.byId(id);

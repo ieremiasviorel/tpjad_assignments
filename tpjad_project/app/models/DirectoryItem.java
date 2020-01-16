@@ -1,6 +1,5 @@
 package models;
 
-import io.ebean.ExpressionList;
 import io.ebean.Finder;
 
 import javax.persistence.Entity;
@@ -26,14 +25,10 @@ public class DirectoryItem extends FileManagerItem {
         super(name, parent);
     }
 
-    public static final Finder<Long, DirectoryItem> find = new Finder<Long, DirectoryItem>(DirectoryItem.class);
+    public static final Finder<Long, DirectoryItem> find = new Finder<>(DirectoryItem.class);
 
     public static DirectoryItem getById(final Long id) {
         return find.byId(id);
-    }
-
-    public static ExpressionList<DirectoryItem> findByParent(final DirectoryItem directoryItem) {
-        return find.query().where().eq("parent", directoryItem.id);
     }
 
     public DirectoryItem getRoot(){

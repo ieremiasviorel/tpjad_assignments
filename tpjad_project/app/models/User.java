@@ -16,8 +16,6 @@ import java.util.*;
 @Table(name = "users")
 public class User extends AppModel {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     public Long id;
 
@@ -34,7 +32,7 @@ public class User extends AppModel {
     @OneToMany(cascade = CascadeType.ALL)
     public List<LinkedAccount> linkedAccounts;
 
-    public static final Finder<Long, User> find = new Finder<Long, User>(User.class);
+    public static final Finder<Long, User> find = new Finder<>(User.class);
 
     public static boolean existsByAuthUserIdentity(final AuthUserIdentity identity) {
         final ExpressionList<User> exp = getAuthUserFind(identity);
@@ -62,7 +60,7 @@ public class User extends AppModel {
 
         // deactivate the merged user that got added to this one
         otherUser.active = false;
-        Ebean.save(Arrays.asList(new User[]{otherUser, this}));
+        Ebean.save(Arrays.asList(otherUser, this));
     }
 
     public static User create(final AuthUser authUser) {
@@ -97,15 +95,6 @@ public class User extends AppModel {
                 User.findByAuthUserIdentity(newUser));
     }
 
-    public Set<String> getProviders() {
-        final Set<String> providerKeys = new HashSet<String>(
-                linkedAccounts.size());
-        for (final LinkedAccount acc : linkedAccounts) {
-            providerKeys.add(acc.providerKey);
-        }
-        return providerKeys;
-    }
-
     public static void addLinkedAccount(final AuthUser oldUser,
                                         final AuthUser newUser) {
         final User u = User.findByAuthUserIdentity(oldUser);
@@ -113,16 +102,7 @@ public class User extends AppModel {
         u.save();
     }
 
-    public static User findByEmail(final String email) {
-        return getEmailUserFind(email).findOne();
-    }
-
-    private static ExpressionList<User> getEmailUserFind(final String email) {
-        return find.query().where().eq("active", true).eq("email", email);
-    }
-
     public LinkedAccount getAccountByProvider(final String providerKey) {
         return LinkedAccount.findByProviderKey(this, providerKey);
     }
-
 }

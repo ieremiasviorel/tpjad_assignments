@@ -12,13 +12,10 @@
         }
     }
 
-    Login/Signup:
+    Login/Sign Up:
     <ul>
     @forProviders(playAuth) { p =>
         <li><a href="@p.getUrl()">@p.getKey()</a></li>
     }
     </ul>
-
-    <br/>
-    <a href="@routes.Restricted.index">Secrets everywhere...</a>
 }

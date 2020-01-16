@@ -31,7 +31,7 @@ public class MyUserService extends AbstractUserService {
 	@Override
 	public Object getLocalIdentity(final AuthUserIdentity identity) {
 		// For production: Caching might be a good idea here...
-		// ...and dont forget to sync the cache when users get deactivated/deleted
+		// ...and don't forget to sync the cache when users get deactivated/deleted
 		final User u = User.findByAuthUserIdentity(identity);
 		if(u != null) {
 			return u.id;
@@ -53,5 +53,4 @@ public class MyUserService extends AbstractUserService {
 		User.addLinkedAccount(oldUser, newUser);
 		return null;
 	}
-
 }

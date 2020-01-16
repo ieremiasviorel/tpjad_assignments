@@ -6,7 +6,7 @@ import models.FileItem;
 import models.LinkedAccount;
 import models.User;
 import play.mvc.Controller;
-import play.mvc.Http;
+import play.mvc.Http.MultipartFormData;
 import play.mvc.Result;
 import play.mvc.Security;
 import service.FileService;
@@ -35,7 +35,7 @@ public class Restricted extends Controller {
         final LinkedAccount account = localUser.getAccountByProvider("google");
 
         // check if the user owns the directory
-        return account.rootDirectory.id == directory.getRoot().id;
+        return account.rootDirectory.id.equals(directory.getRoot().id);
     }
 
     public Result index() {
@@ -79,8 +79,8 @@ public class Restricted extends Controller {
             return unauthorized();
         }
 
-        Http.MultipartFormData data = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart filePart = data.getFile("file");
+        MultipartFormData data = request().body().asMultipartFormData();
+        MultipartFormData.FilePart filePart = data.getFile("file");
 
         File file = (File) filePart.getFile();
         String fileName = filePart.getFilename();
