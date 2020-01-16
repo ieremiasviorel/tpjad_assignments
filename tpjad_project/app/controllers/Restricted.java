@@ -95,6 +95,10 @@ public class Restricted extends Controller {
     public Result create(String directoryIdStr) {
         DirectoryItem parentDirectory = DirectoryItem.getById(Long.parseLong(directoryIdStr));
 
+        if (!checkUserPermission(parentDirectory.id)) {
+            return unauthorized();
+        }
+
         String newDirectoryName = request().body().asFormUrlEncoded().get("directoryName")[0];
         DirectoryItem directoryItem = new DirectoryItem(newDirectoryName, parentDirectory);
 
