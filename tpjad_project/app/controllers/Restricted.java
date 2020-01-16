@@ -3,6 +3,7 @@ package controllers;
 import com.feth.play.module.pa.PlayAuthenticate;
 import models.DirectoryItem;
 import models.FileItem;
+import models.LinkedAccount;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -28,6 +29,15 @@ public class Restricted extends Controller {
         this.userService = userService;
     }
 
+    public boolean checkUserPermission(Long directoryId) {
+        final User localUser = this.userService.getLocalUser(this.auth.getUser(session()));
+        final DirectoryItem directory = DirectoryItem.getById(directoryId);
+        final LinkedAccount account = localUser.getAccountByProvider("google");
+
+        // check if the user owns the directory
+        return account.rootDirectory.id == directory.getRoot().id;
+    }
+
     public Result index() {
         final User localUser = this.userService.getLocalUser(this.auth.getUser(session()));
         return redirect("restricted/" + localUser.linkedAccounts.get(0).rootDirectory.id.toString());
@@ -36,6 +46,11 @@ public class Restricted extends Controller {
     public Result indexById(String directoryId) {
         final User localUser = this.userService.getLocalUser(this.auth.getUser(session()));
         final DirectoryItem directory = DirectoryItem.getById(Long.parseLong(directoryId));
+
+        if (!checkUserPermission(directory.id)) {
+            return unauthorized();
+        }
+
         final List<DirectoryItem> directoryAncestors = directory.getAncestors();
 
         return ok(restricted.render(this.auth, localUser, directory, directoryAncestors));
@@ -45,6 +60,11 @@ public class Restricted extends Controller {
         Long fileId = Long.parseLong(fileIdStr);
 
         FileItem fileItem = FileItem.getById(fileId);
+
+        if (!checkUserPermission(fileItem.parent.id)) {
+            return unauthorized();
+        }
+
         String filePath = FileService.getFilePath(fileItem);
         File file = FileService.downloadFile(filePath);
 
@@ -53,6 +73,12 @@ public class Restricted extends Controller {
     }
 
     public Result upload(String directoryIdStr) {
+        DirectoryItem directoryItem = DirectoryItem.getById(Long.parseLong(directoryIdStr));
+
+        if (!checkUserPermission(directoryItem.id)) {
+            return unauthorized();
+        }
+
         Http.MultipartFormData data = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = data.getFile("file");
 

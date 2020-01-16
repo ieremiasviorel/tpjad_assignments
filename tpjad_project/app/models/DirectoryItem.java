@@ -35,4 +35,14 @@ public class DirectoryItem extends FileManagerItem {
     public static ExpressionList<DirectoryItem> findByParent(final DirectoryItem directoryItem) {
         return find.query().where().eq("parent", directoryItem.id);
     }
+
+    public DirectoryItem getRoot(){
+        DirectoryItem root = this;
+
+        while (root.parent != null) {
+            root = getById(root.parent.id);
+        }
+
+        return root;
+    }
 }
