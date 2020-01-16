@@ -12,14 +12,20 @@ public class FileService {
         return new File(path);
     }
 
+    private static String hash(Long id) {
+        return String.valueOf((id.toString() + "secret").hashCode());
+    }
+
     public static boolean uploadFile(File file, String fileName, Long directoryId) {
         FileItem fileItem = new FileItem(fileName, DirectoryItem.getById(directoryId));
         fileItem.save();
 
-        return file.renameTo(new File(FileService.USER_DIRECTORY + "/" + fileItem.id));
+        System.out.println(hash(fileItem.id));
+
+        return file.renameTo(new File(FileService.USER_DIRECTORY + "/" + hash(fileItem.id)));
     }
 
     public static String getFilePath(FileItem fileItem) {
-        return USER_DIRECTORY + "/" + fileItem.id;
+        return USER_DIRECTORY + "/" + hash(fileItem.id);
     }
 }
