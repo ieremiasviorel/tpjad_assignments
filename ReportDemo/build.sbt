@@ -1,5 +1,5 @@
 name := """Demo"""
-organization := "com.example"
+organization := "com.tpjad"
 
 version := "1.0-SNAPSHOT"
 

@@ -9,5 +9,4 @@ GET        /demo                      controllers.HelloWorld.index(name: String 
 GET        /demo/:name                controllers.HelloWorld.indexWithPathParam(name)
 GET        /demo/:title/:name         controllers.HelloWorld.indexWithPathParamAndQueryParam(title, name)
 GET        /demoh/:title/:name        controllers.HelloWorld.indexWithHTML(title, name)
-
 GET        /demop                     controllers.ParallelController.index()
