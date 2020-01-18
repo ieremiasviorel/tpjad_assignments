@@ -17,16 +17,16 @@ public class CityBeanImpl implements CityServiceLocal, CityServiceRemote {
     private EntityManager manager;
 
     @Override
+    public List<City> getAll() {
+        TypedQuery<City> query = manager.createQuery("SELECT c FROM City c", City.class);
+        return query.getResultList();
+    }
+
+    @Override
     public City getByName(String name) {
         TypedQuery<City> query = manager.createQuery("SELECT c FROM City AS c WHERE c.name = :name", City.class);
         query.setParameter("name", name);
         return query.getSingleResult();
-    }
-
-    @Override
-    public List<City> getAll() {
-        TypedQuery<City> query = manager.createQuery("SELECT c FROM City c", City.class);
-        return query.getResultList();
     }
 
     @Override

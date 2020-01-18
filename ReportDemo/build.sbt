@@ -1,4 +1,4 @@
-name := """Demo"""
+name := """report-demo"""
 organization := "com.tpjad"
 
 version := "1.0-SNAPSHOT"

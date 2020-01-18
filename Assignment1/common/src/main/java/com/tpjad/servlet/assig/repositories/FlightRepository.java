@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FlightRepository {
+
     static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-    private static List<Flight> flights = new ArrayList<Flight>();
+    private static List<Flight> flights = new ArrayList<>();
 
     public List<Flight> findAll() {
         return flights;

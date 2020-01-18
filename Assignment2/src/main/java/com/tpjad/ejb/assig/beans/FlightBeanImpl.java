@@ -4,6 +4,7 @@ import com.tpjad.ejb.assig.beans.interfaces.FlightServiceLocal;
 import com.tpjad.ejb.assig.beans.interfaces.FlightServiceRemote;
 import com.tpjad.ejb.assig.dtos.FlightFilter;
 import com.tpjad.ejb.assig.entities.Flight;
+import com.tpjad.ejb.assig.utils.PredicateType;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

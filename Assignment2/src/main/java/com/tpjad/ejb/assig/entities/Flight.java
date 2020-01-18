@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Entity
 public class Flight implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQMYCLASSID")
     private int id;

@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @Entity
 public class City implements Serializable, Comparable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQMYCLASSID")
     private int id;

@@ -8,9 +8,9 @@ import java.util.List;
 @Local
 public interface CityServiceLocal {
 
-    City getByName(String name);
-
     List<City> getAll();
+
+    City getByName(String name);
 
     List<City> getByCountry(String country);
 

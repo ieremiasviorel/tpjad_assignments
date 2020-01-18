@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CityServiceRemote {
 
-    City getByName(String name);
-
     List<City> getAll();
+
+    City getByName(String name);
 
     List<City> getByCountry(String country);
 

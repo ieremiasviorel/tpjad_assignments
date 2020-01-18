@@ -20,7 +20,7 @@ public class CitiesServlet extends HttpServlet {
     private CityServiceImpl cityService;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         this.cityService = new CityServiceImpl();
     }
 

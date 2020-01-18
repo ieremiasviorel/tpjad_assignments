@@ -1,4 +1,4 @@
-package com.tpjad.ejb.assig.beans;
+package com.tpjad.ejb.assig.utils;
 
 public enum PredicateType {
     EQUAL,

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 
 
 public class FlightFilter {
-
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private String departureCountry;

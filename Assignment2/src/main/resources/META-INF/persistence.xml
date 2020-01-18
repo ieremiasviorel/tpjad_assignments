@@ -8,8 +8,10 @@
         <jta-data-source>jdbc/mysql</jta-data-source>
         <!-- for WildFly -->
         <!-- jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source-->
+
         <class>com.tpjad.ejb.assig.entities.City</class>
         <class>com.tpjad.ejb.assig.entities.Flight</class>
+
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
