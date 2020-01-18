@@ -1,2 +1,0 @@
-GET         /        controllers.PersonController.getPersons()
-POST        /        controllers.PersonController.addPerson(request: Request)

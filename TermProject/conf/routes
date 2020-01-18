@@ -1,5 +1,22 @@
-GET        /                    controllers.HomeController.index
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+# ROUTES
 
-->         /posts               posts.Routes
-->         /persons             persons.Routes
+GET         /                                                controllers.Application.index
+GET         /restricted                                      controllers.Restricted.index
+
+# File routes
+GET         /restricted/download_file/:fileId                controllers.Restricted.download(fileId)
+GET         /restricted/delete_file/:fileId                  controllers.Restricted.deleteFile(fileId)
++nocsrf
+POST        /restricted/upload_file/:directoryId             controllers.Restricted.upload(directoryId)
+
+# Directory routes
+GET         /restricted/delete_directory/:directoryId        controllers.Restricted.deleteDirectory(directoryId)
++nocsrf
+POST        /restricted/create_directory/:directoryId        controllers.Restricted.create(directoryId)
+
+GET         /restricted/:directoryId                         controllers.Restricted.indexForDirectory(directoryId)
+
+# Auth routes
+GET         /logout                                          com.feth.play.module.pa.controllers.Authenticate.logout
+GET         /authenticate/:provider                          com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
+GET         /authenticate/:provider/denied                   controllers.Application.oAuthDenied(provider: String)

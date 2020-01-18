@@ -1,25 +1,25 @@
+organization := "com.tpjad"
+
+name := "play-file-manager"
+
+scalaVersion := "2.12.6"
+
+version := "1.0-SNAPSHOT"
+
+val appDependencies = Seq(
+  javaJdbc,
+  cacheApi,
+  ehcache,
+  javaWs,
+  "com.feth" %% "play-authenticate" % "0.9.0-SNAPSHOT",
+  "mysql" % "mysql-connector-java" % "5.1.36"
+)
+
+// add resolver for easymail snapshots
+resolvers += Resolver.sonatypeRepo("snapshots")
+
 lazy val root = (project in file("."))
-  .enablePlugins(PlayJava)
+  .enablePlugins(PlayJava, PlayEbean)
   .settings(
-    name := "termproject",
-    version := "2.8.x",
-    scalaVersion := "2.13.1",
-    resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
-    libraryDependencies ++= Seq(
-      guice,
-      javaJpa,
-      "com.h2database" % "h2" % "1.4.199",
-      "org.hibernate" % "hibernate-core" % "5.4.9.Final",
-      "io.dropwizard.metrics" % "metrics-core" % "4.1.1",
-      "com.palominolabs.http" % "url-builder" % "1.1.0",
-      "net.jodah" % "failsafe" % "2.3.1",
-      "be.objectify" %% "deadbolt-java" % "2.7.1"
-    ),
-    PlayKeys.externalizeResources := false,
-    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
-    javacOptions ++= Seq(
-      "-Xlint:unchecked",
-      "-Xlint:deprecation",
-      "-Werror"
-    )
+    libraryDependencies ++= appDependencies
   )

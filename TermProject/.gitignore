@@ -1,4 +1,11 @@
-/.idea
-/logs
-/null
+logs
+project/project
+project/target
 target
+dist
+userdata
+.classpath
+.project
+.settings
+.target
+.idea

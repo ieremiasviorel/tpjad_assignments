@@ -1,58 +1,21 @@
-@()
-<!doctype html>
+@(playAuth: com.feth.play.module.pa.PlayAuthenticate)
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Play REST API</title>
-    </head>
+@import com.feth.play.module.pa.views.html._
 
-    <body>
-        <h1>Play REST API</h1>
+@main("Play! Authenticate simple OAuth sample") {
 
-        <p>
-            This is a placeholder page to show you the REST API.  Use <a href="https://httpie.org/">httpie</a>
-            to post JSON to the application.
-        </p>
+    @currentAuth(playAuth) { auth =>
+        @if(auth != null) {
+            <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+            <br/>
+            <br/>
+        }
+    }
 
-        <p>
-            To see all posts, you can do a GET:
-        </p>
-
-        <pre>
-            <code>http GET localhost:9000/posts</code>
-        </pre>
-
-        <p>
-            To create new posts, do a post
-        </p>
-
-        <pre>
-            <code>http POST localhost:9000/posts title="Some Title" body="Some Body"</code>
-        </pre>
-
-        <p>
-            You can always look at the API directly: <a href="/posts">/posts</a>
-        </p>
-
-        <p>
-            To see all persons, you can do a GET:
-        </p>
-
-        <pre>
-            <code>http GET localhost:9000/persons</code>
-        </pre>
-
-        <p>
-            To create new persons, do a post
-        </p>
-
-        <pre>
-            <code>http POST localhost:9000/persons name="Some name"</code>
-        </pre>
-
-        <p>
-            You can always look at the API directly: <a href="/persons">/persons</a>
-        </p>
-    </body>
-</html>
+    Login/Sign Up:
+    <ul>
+    @forProviders(playAuth) { p =>
+        <li><a href="@p.getUrl()">@p.getKey()</a></li>
+    }
+    </ul>
+}
